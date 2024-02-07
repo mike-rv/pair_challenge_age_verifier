@@ -24,14 +24,14 @@ _Include the name of the function, its parameters, return value, and side effect
 ```python
 # EXAMPLE
 
-def age(mixed_words):
-    """Extracts uppercase words from a string
+def age_verifier(dateofbirth):
+    """takes in date of birth as string
 
     Parameters: (list all parameters and their types)
-        mixed_words: a string containing words (e.g. "hello WORLD")
+        dateofbirth: a string containing the birthday (e.g. "2023-12-31")
 
     Returns: (state the return value and its type)
-        a list of strings, each one a word (e.g. ["WORLD"])
+        a message containing either access granted or access denied (e.g. access denied!)
 
     Side effects: (state any side effects)
         This function doesn't print anything or have any other side-effects
@@ -41,52 +41,37 @@ def age(mixed_words):
 
 ## 3. Create Examples as Tests
 
+def modify_list(lst):
+    lst.append(4)
+
+my_list = [1, 2, 3]
+modify_list(my_list)
+print(my_list)  # Output: [1, 2, 3, 4]
+
 _Make a list of examples of what the function will take and return._
 
 ```python
 # EXAMPLE
 
 """
-Given a lower and an uppercase word
-It returns a list with the uppercase word
+Given a birth date which is under 16
+It returns the message Acces denied
 """
-extract_uppercase("hello WORLD") => ["WORLD"]
+def age_verifier("2023-01-01") => ["Access denied!"]
 
 """
-Given two uppercase words
-It returns a list with both words
+Given a birth date which is above 16
+It returns the message Acces granted!
 """
-extract_uppercase("HELLO WORLD") => ["HELLO", "WORLD"]
+def age_verifier("1985-01-01") => ["Access granted!"]
 
 """
-Given two lowercase words
-It returns an empty list
-"""
-extract_uppercase("hello world") => []
+Given the input only includes the year of birth
+It returns a the error message Wrong date format!
 
 """
-Given a lower and a mixed case word
-It returns an empty list
-"""
-extract_uppercase("hello WoRLD") => []
+def age_verifier("1985") => ["Wrong date format!"]
 
-"""
-Given a lowercase word and an uppercase word with an exclamation mark
-It returns a list with the uppercase word, no exclamation mark
-"""
-extract_uppercase("hello WORLD!") => ["WORLD"]
-
-"""
-Given an empty string
-It returns an empty list
-"""
-extract_uppercase("") => []
-
-"""
-Given a None value
-It throws an error
-"""
-extract_uppercase(None) throws an error
 ```
 
 _Encode each example as a test. You can add to the above list as you go._
@@ -100,15 +85,28 @@ Here's an example for you to start with:
 ```python
 # EXAMPLE
 
-from lib.extract_uppercase import *
+from lib.age_verifier import *
 
 """
 Given a lower and an uppercase word
 It returns a list with the uppercase word
 """
-def test_extract_uppercase_with_upper_then_lower():
-    result = extract_uppercase("hello WORLD")
-    assert result == ["WORLD"]
+def test_age_verifier_user_is_old_enough(dateofbirth):
+    actual = age_verifier("1985-12-25"):
+    expected = "Access granted!"
+    assert actual == expected
+
+def test_age_verifier_user_is_old_enough(dateofbirth):
+    actual = age_verifier("2015-12-25"):
+    expected = "Access denied!"
+    assert actual == expected
+    
+def test_age_verifier_user_is_old_enough(dateofbirth):
+    with pytest.raises(Exception) as err:
+        age_verifier(dateofbirth):
+    actual = str(err.value)
+    expected = "Wrong date format!"
+    assert actual == expected
 ```
 
 Ensure all test function names are unique, otherwise pytest will ignore them!
